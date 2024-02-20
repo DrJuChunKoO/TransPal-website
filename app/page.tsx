@@ -4,10 +4,10 @@ function IndexTitle({ children }: { children: React.ReactNode }) {
 }
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-between py-24 container">
+    <div className="flex flex-col items-center justify-between py-24 container">
       <div>
         <IndexTitle>近期會議紀錄</IndexTitle>
       </div>
-    </main>
+    </div>
   );
 }

@@ -18,12 +18,18 @@ export default async function Page({
       <div className="flex flex-col gap-4">
         {fileParsed.content.map((item: any, index: number) => {
           const text = (
-            <div className="ml-12 text-gray-700 -mt-4 py-1 px-2 hover:bg-gray-50 rounded">
+            <div
+              className="ml-12 text-gray-700 -mt-4 py-1 px-2 hover:bg-gray-50 rounded"
+              key={`text-${index}`}
+            >
               {item.text}
             </div>
           );
           const avatar = (
-            <div className="flex items-start justify-start gap-2 -mb-6">
+            <div
+              className="flex items-start justify-start gap-2 -mb-6"
+              key={`avatar-${index}`}
+            >
               <Avatar name={item.speaker} />
               <div>
                 <div className="font-bold text-gray-800">{item.speaker}</div>
