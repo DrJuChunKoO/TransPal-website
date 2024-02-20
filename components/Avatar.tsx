@@ -1,7 +1,8 @@
-import { promises as fs } from "fs";
+"use client";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { UserIcon } from "@heroicons/react/24/solid";
 import { twMerge } from "tailwind-merge";
+import { UserIcon } from "@heroicons/react/24/solid";
 function genColor(name: string) {
   let randomSeed = name
     .split("")
@@ -13,24 +14,33 @@ function genColor(name: string) {
   }
   return "#" + resultColor;
 }
-export default async function Avatar({
+export default function Avatar({
   name,
   className,
 }: {
   name: string;
   className?: string;
 }) {
-  const isAvatarExist = await fs
-    .access(process.cwd() + "/data/avatars/" + `${name}.webp`)
-    .then(() => true)
-    .catch(() => false);
+  const [avatar, setAvatar] = useState<string | null>(null);
 
-  if (!isAvatarExist) {
+  const loadAvatar = async () => {
+    try {
+      const avatarModule = await import(`../data/avatars/${name}.webp`);
+      setAvatar(avatarModule.default);
+    } catch (error) {
+      console.error("Failed to load avatar:", error);
+    }
+  };
+  useEffect(() => {
+    loadAvatar();
+  }, [name]);
+
+  if (!avatar) {
     const bgColor = genColor(name);
     return (
       <div
         className={twMerge(
-          "size-12 rounded-full overflow-hidden  flex items-center justify-center text-white",
+          "size-12 rounded-full overflow-hidden flex items-center justify-center text-white",
           className
         )}
         style={{
@@ -42,8 +52,6 @@ export default async function Avatar({
     );
   }
 
-  const avatar = await import(`../data/avatars/${name}.webp`);
-
   return (
     <div
       className={twMerge(
@@ -52,7 +60,7 @@ export default async function Avatar({
       )}
     >
       <Image
-        src={await import(`../data/avatars/${name}.webp`)}
+        src={avatar}
         width={48}
         height={48}
         className="size-12 object-cover object-center"
