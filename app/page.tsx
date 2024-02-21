@@ -1,12 +1,30 @@
-import Image from "next/image";
-function IndexTitle({ children }: { children: React.ReactNode }) {
-  return <h1 className="text-2xl font-bold text-center">{children}</h1>;
-}
-export default function Home() {
+import { promises as fs } from "fs";
+import SpeechesList from "@/components/SpeechesList";
+export default async function Page() {
+  const speeches = await Promise.all(
+    (
+      await fs.readdir(process.cwd() + "/public/speeches")
+    ).map(async (file) => {
+      const fileData = await fs.readFile(
+        process.cwd() + "/public/speeches/" + file,
+        "utf-8"
+      );
+      const fileParsed = JSON.parse(fileData);
+      let { name, date } = fileParsed.info;
+      if (!name) name = file.split(".").slice(0, -1).join(".");
+      return {
+        filename: file.replace(/\.json$/, ""),
+        name,
+        date,
+      };
+    })
+  );
+
   return (
-    <div className="flex flex-col items-center justify-between py-24 container">
+    <div className="container my-10">
+      <div className="text-4xl font-bold text-gray-800 mb-4">紀錄</div>
       <div>
-        <IndexTitle>近期會議紀錄</IndexTitle>
+        <SpeechesList Speeches={speeches} />
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ function genColor(name: string) {
   }
   return "#" + resultColor;
 }
+
 export default function Avatar({
   name,
   className,
@@ -21,19 +22,7 @@ export default function Avatar({
   name: string;
   className?: string;
 }) {
-  const [avatar, setAvatar] = useState<string | null>(null);
-
-  const loadAvatar = async () => {
-    try {
-      const avatarModule = await import(`../data/avatars/${name}.webp`);
-      setAvatar(avatarModule.default);
-    } catch (error) {
-      console.error("Failed to load avatar:", error);
-    }
-  };
-  useEffect(() => {
-    loadAvatar();
-  }, [name]);
+  const [avatar, setAvatar] = useState<string | null>(`/avatars/${name}.webp`);
 
   if (!avatar) {
     const bgColor = genColor(name);
@@ -65,6 +54,7 @@ export default function Avatar({
         height={48}
         className="size-12 object-cover object-center"
         alt="Picture of the author"
+        onError={() => setAvatar(null)}
       />
     </div>
   );

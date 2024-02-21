@@ -1,5 +1,7 @@
 import { promises as fs } from "fs";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Avatar from "@/components/Avatar";
+import Link from "next/link";
 export default async function Page({
   params,
 }: {
@@ -8,13 +10,21 @@ export default async function Page({
   };
 }) {
   const file = await fs.readFile(
-    process.cwd() + "/data/speeches/" + decodeURIComponent(params.filename),
+    process.cwd() +
+      "/public/speeches/" +
+      decodeURIComponent(params.filename) +
+      ".json",
     "utf-8"
   );
   const fileParsed = JSON.parse(file);
+  const name =
+    fileParsed.info.name ||
+    decodeURIComponent(params.filename).split(".").slice(0, -1).join(".");
+  const date = fileParsed.info.date;
   return (
     <div className="container my-10">
-      <div className="text-4xl font-bold text-gray-800 mb-6">紀錄</div>
+      <div className="text-4xl font-bold text-gray-800">{name}</div>
+      <div className="text-gray-500 mb-6">{date}</div>
       <div className="flex flex-col gap-4">
         {fileParsed.content.map((item: any, index: number) => {
           const text = (
