@@ -1,19 +1,51 @@
+import type { Metadata, ResolvingMetadata } from "next";
 import { getSpeech, getSpeeches } from "@/utils/speeches";
 import Avatar from "@/components/Avatar";
+
+type Props = {
+  params: {
+    filename: string;
+  };
+};
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const { filename } = params;
+
+  // fetch data
+  const speech = await getSpeech(filename);
+  const speakers = [
+    // @ts-ignore
+    ...new Set(speech.content.map((item: any) => item.speaker)),
+  ].join("、");
+  return {
+    title: speech.info.name,
+    description: `${speech.info.name}\n日期：${speech.info.date}\n與會人士：${speakers}`,
+    openGraph: {
+      images: [
+        {
+          url: `/api/og/speech?data=${encodeURIComponent(
+            JSON.stringify({
+              title: speech.info.name,
+              date: speech.info.date,
+              speakers,
+            })
+          )}`,
+        },
+      ],
+    },
+  } as Metadata;
+}
 export async function generateStaticParams() {
   const speeches = await getSpeeches();
 
   return speeches.map((speech) => ({
-    filename: speech.filename,
+    filename: encodeURIComponent(speech.filename),
   }));
 }
-export default async function Page({
-  params,
-}: {
-  params: {
-    filename: string;
-  };
-}) {
+export default async function Page({ params }: Props) {
   const speech = await getSpeech(params.filename);
   const name =
     speech.info.name ||
