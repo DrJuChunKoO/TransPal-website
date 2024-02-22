@@ -1,8 +1,16 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/DrJuChunKoO/TransPal-website)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FDrJuChunKoO%2FTransPal-website)
 
-# TransPal website
+# TransPal
 
 會議逐字稿紀錄網站
+
+## 架構
+
+TransPal 由三個部分組成
+
+- 轉錄工具：（開發中，目前可透過 https://www.vocol.ai/ 轉錄的 .srt 字幕檔匯入編輯器）
+- 編輯器：https://github.com/DrJuChunKoO/TransPal-editor
+- 網站：https://github.com/DrJuChunKoO/TransPal-website
 
 ## 開發
 
