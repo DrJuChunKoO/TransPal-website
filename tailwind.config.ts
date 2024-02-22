@@ -20,6 +20,13 @@ const config = {
       },
     },
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: "100%", // add required value here
+          },
+        },
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
