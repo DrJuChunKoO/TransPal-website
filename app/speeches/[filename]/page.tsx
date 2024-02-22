@@ -15,7 +15,7 @@ export async function generateMetadata(
   const { filename } = params;
 
   // fetch data
-  const speech = await getSpeech(filename);
+  const speech = await getSpeech(decodeURIComponent(filename));
   const speakers = [
     // @ts-ignore
     ...new Set(speech.content.map((item: any) => item.speaker)),
