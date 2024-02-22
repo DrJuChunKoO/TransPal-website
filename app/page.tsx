@@ -1,6 +1,8 @@
 import { promises as fs } from "fs";
 import SpeechesList from "@/components/SpeechesList";
-export default async function Page() {
+import { cache } from "react";
+
+export const getSpeeches = cache(async () => {
   const speeches = await Promise.all(
     (
       await fs.readdir(process.cwd() + "/public/speeches")
@@ -21,7 +23,11 @@ export default async function Page() {
         };
       })
   );
+  return speeches;
+});
 
+export default async function Page() {
+  const speeches = await getSpeeches();
   return (
     <div className="container my-10">
       <div className="text-4xl font-bold text-gray-800 mb-4">紀錄</div>

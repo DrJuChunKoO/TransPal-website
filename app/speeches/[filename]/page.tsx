@@ -1,7 +1,19 @@
 import { promises as fs } from "fs";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Avatar from "@/components/Avatar";
-import Link from "next/link";
+import { cache } from "react";
+
+const getSpeech = cache(async (filename: string) => {
+  const file = await fs.readFile(
+    process.cwd() +
+      "/public/speeches/" +
+      decodeURIComponent(filename) +
+      ".json",
+    "utf-8"
+  );
+  const fileParsed = JSON.parse(file);
+  return fileParsed;
+});
+
 export default async function Page({
   params,
 }: {
@@ -9,24 +21,17 @@ export default async function Page({
     filename: string;
   };
 }) {
-  const file = await fs.readFile(
-    process.cwd() +
-      "/public/speeches/" +
-      decodeURIComponent(params.filename) +
-      ".json",
-    "utf-8"
-  );
-  const fileParsed = JSON.parse(file);
+  const speech = await getSpeech(params.filename);
   const name =
-    fileParsed.info.name ||
+    speech.info.name ||
     decodeURIComponent(params.filename).split(".").slice(0, -1).join(".");
-  const date = fileParsed.info.date;
+  const date = speech.info.date;
   return (
     <div className="container my-10">
       <div className="text-4xl font-bold text-gray-800">{name}</div>
       <div className="text-gray-500 mb-6">{date}</div>
       <div className="flex flex-col gap-4">
-        {fileParsed.content.map((item: any, index: number) => {
+        {speech.content.map((item: any, index: number) => {
           const text = (
             <div
               className="ml-12 text-gray-700 -mt-4 py-1 px-2 hover:bg-gray-50 rounded"
@@ -46,7 +51,7 @@ export default async function Page({
               </div>
             </div>
           );
-          return fileParsed.content[index - 1]?.speaker !== item.speaker ? (
+          return speech.content[index - 1]?.speaker !== item.speaker ? (
             <>
               {avatar}
               {text}
