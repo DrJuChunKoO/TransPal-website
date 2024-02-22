@@ -1,18 +1,5 @@
-import { promises as fs } from "fs";
+import { getSpeech } from "@/utils/speeches";
 import Avatar from "@/components/Avatar";
-import { cache } from "react";
-
-const getSpeech = cache(async (filename: string) => {
-  const file = await fs.readFile(
-    process.cwd() +
-      "/public/speeches/" +
-      decodeURIComponent(filename) +
-      ".json",
-    "utf-8"
-  );
-  const fileParsed = JSON.parse(file);
-  return fileParsed;
-});
 
 export default async function Page({
   params,
