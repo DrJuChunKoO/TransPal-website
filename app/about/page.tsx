@@ -16,7 +16,7 @@ export default function Page() {
           >
             GitHub
           </a>{" "}
-          中，找到這個網站的原始碼。
+          中，找到這個網站的原始碼和相關部署說明。
         </p>
       </div>
     </div>
