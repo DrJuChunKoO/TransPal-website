@@ -50,7 +50,6 @@ export async function GET(request: Request) {
             style={{
               fontSize: 36,
               color: `rgb(31, 41, 55)`,
-
               opacity: 0.75,
             }}
           >
