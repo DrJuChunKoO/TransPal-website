@@ -1,6 +1,12 @@
-import { getSpeech } from "@/utils/speeches";
+import { getSpeech, getSpeeches } from "@/utils/speeches";
 import Avatar from "@/components/Avatar";
+export async function generateStaticParams() {
+  const speeches = await getSpeeches();
 
+  return speeches.map((speech) => ({
+    filename: speech.filename,
+  }));
+}
 export default async function Page({
   params,
 }: {
