@@ -42,7 +42,7 @@ export async function generateStaticParams() {
   const speeches = await getSpeeches();
 
   return speeches.map((speech) => ({
-    filename: encodeURIComponent(speech.filename),
+    filename: speech.filename,
   }));
 }
 export default async function Page({ params }: Props) {

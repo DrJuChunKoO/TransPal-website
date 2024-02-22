@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/icon.png",
   },
+  metadataBase: new URL(`https://transpal.juchunko.com/`),
 };
 
 export default function RootLayout({
