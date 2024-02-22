@@ -22,7 +22,7 @@ export async function generateMetadata(
   ].join("、");
   return {
     title: speech.info.name,
-    description: `${speech.info.name}\n日期：${speech.info.date}\n與會人士：${speakers}`,
+    description: `日期：${speech.info.date}\n與會人士：${speakers}`,
     openGraph: {
       images: [
         {
