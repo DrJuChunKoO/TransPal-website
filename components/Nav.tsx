@@ -39,6 +39,7 @@ function NavLink({
 
 export default function Nav() {
   const isIndex = usePathname() === "/";
+  const currentPath = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const isMessage = usePathname().match(/\/speeches\/[^/]+\/[^/]+/) !== null;
   const router = useRouter();
@@ -58,7 +59,11 @@ export default function Nav() {
                   >
                     {isMessage ? (
                       <button
-                        onClick={() => router.back()}
+                        onClick={() =>
+                          router.push(
+                            currentPath.split("/").slice(0, -1).join("/")
+                          )
+                        }
                         className="p-2 rounded hover:bg-gray-100 active:bg-gray-200 mr-2 block"
                       >
                         <ArrowLeft className="size-6" />
