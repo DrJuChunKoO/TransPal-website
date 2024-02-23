@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const data = searchParams.get("data");
 
   if (data) {
-    const { title, date, speakers } = JSON.parse(data);
+    const { title, date, message, speaker } = JSON.parse(data);
     return new ImageResponse(
       (
         <div
@@ -33,18 +33,9 @@ export async function GET(request: Request) {
               opacity: 0.5,
             }}
           >
-            {date}
-          </div>
-          <div style={{ flex: 1 }}></div>
-          <div
-            style={{
-              fontSize: 72,
-              color: `rgb(31, 41, 55)`,
-              fontWeight: "bold",
-            }}
-          >
             {title}
           </div>
+          <div style={{ flex: 1 }}></div>
           <div
             style={{
               fontSize: 36,
@@ -52,7 +43,16 @@ export async function GET(request: Request) {
               opacity: 0.75,
             }}
           >
-            {speakers}
+            {speaker}
+          </div>
+          <div
+            style={{
+              fontSize: 72,
+              color: `rgb(31, 41, 55)`,
+              fontWeight: "bold",
+            }}
+          >
+            {message}
           </div>
           <div style={{ flex: 1 }}></div>
           <div
@@ -60,9 +60,13 @@ export async function GET(request: Request) {
               fontSize: 36,
               color: `rgb(31, 41, 55)`,
               opacity: 0.5,
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
             }}
           >
-            transpal.juchunko.com
+            <span>{date}</span>
+            <span>transpal.juchunko.com</span>
           </div>
         </div>
       ),

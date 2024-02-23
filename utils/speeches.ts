@@ -31,6 +31,14 @@ export const getSpeech = cache(async (filename: string) => {
       ".json",
     "utf-8"
   );
-  const fileParsed = JSON.parse(file);
+  const fileParsed: {
+    info: { name: string; date: string };
+    content: {
+      id: string;
+      speaker: string;
+      text: string;
+      type: string;
+    }[];
+  } = JSON.parse(file);
   return fileParsed;
 });

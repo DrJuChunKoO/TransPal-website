@@ -1,6 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { getSpeech, getSpeeches } from "@/utils/speeches";
 import Avatar from "@/components/Avatar";
+import Link from "next/link";
 
 type Props = {
   params: {
@@ -59,10 +60,16 @@ export default async function Page({ params }: Props) {
         {speech.content.map((item: any, index: number) => {
           const text = (
             <div
-              className="ml-12 text-gray-700 -mt-4 py-1 px-2 hover:bg-gray-50 rounded"
+              className="ml-12 text-gray-700 -mt-4 py-1 px-2 hover:bg-gray-50 rounded flex justify-between items-center gap-4 group"
               key={`text-${index}`}
             >
-              {item.text}
+              <div className="flex-1">{item.text}</div>
+              <Link
+                href={`/speeches/${params.filename}/${item.id}`}
+                className="opacity-0 group-hover:opacity-100"
+              >
+                <div className="text-gray-400">🔗</div>
+              </Link>
             </div>
           );
           const avatar = (

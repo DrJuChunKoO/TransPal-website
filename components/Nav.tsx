@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { LinkHTMLAttributes } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -10,6 +10,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { ArrowLeft } from "lucide-react";
 function NavLink({
   href,
   children,
@@ -39,6 +40,8 @@ function NavLink({
 export default function Nav() {
   const isIndex = usePathname() === "/";
   const [isOpen, setIsOpen] = useState(false);
+  const isMessage = usePathname().match(/\/speeches\/[^/]+\/[^/]+/) !== null;
+  const router = useRouter();
   return (
     <div>
       <nav className="border-b border-gray-50 sticky top-0 bg-white/90 backdrop-blur-xl">
@@ -53,12 +56,21 @@ export default function Nav() {
                     exit={{ width: 0, opacity: 0 }}
                     className="overflow-hidden"
                   >
-                    <Link
-                      href="/"
-                      className="p-2 rounded hover:bg-gray-100 active:bg-gray-200 mr-2 block"
-                    >
-                      <ArrowLeftIcon className="size-6" />
-                    </Link>
+                    {isMessage ? (
+                      <button
+                        onClick={() => router.back()}
+                        className="p-2 rounded hover:bg-gray-100 active:bg-gray-200 mr-2 block"
+                      >
+                        <ArrowLeft className="size-6" />
+                      </button>
+                    ) : (
+                      <Link
+                        href="/"
+                        className="p-2 rounded hover:bg-gray-100 active:bg-gray-200 mr-2 block"
+                      >
+                        <ArrowLeft className="size-6" />
+                      </Link>
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>
