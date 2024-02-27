@@ -5,7 +5,9 @@ export default async function Page() {
   const speeches = await getSpeeches();
   return (
     <div className="container my-10">
-      <div className="text-4xl font-bold text-gray-800 mb-4">紀錄</div>
+      <div className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
+        紀錄
+      </div>
       <div>
         <SpeechesList Speeches={speeches} />
       </div>

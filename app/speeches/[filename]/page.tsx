@@ -54,13 +54,15 @@ export default async function Page({ params }: Props) {
   const date = speech.info.date;
   return (
     <div className="container my-10">
-      <div className="text-4xl font-bold text-gray-800">{name}</div>
-      <div className="text-gray-500 mb-6">{date}</div>
+      <div className="text-4xl font-bold text-gray-800 dark:text-white">
+        {name}
+      </div>
+      <div className="text-gray-500 dark:text-gray-200 mb-6">{date}</div>
       <div className="flex flex-col gap-4">
         {speech.content.map((item: any, index: number) => {
           const text = (
             <div
-              className="ml-12 text-gray-700 -mt-4 py-1 px-2 hover:bg-gray-50 rounded flex justify-between items-center gap-4 group"
+              className="ml-12 text-gray-700 dark:text-gray-300 -mt-4 py-1 px-2 hover:bg-gray-50 dark:hover:bg-white/5 rounded flex justify-between items-center gap-4 group"
               key={`text-${index}`}
             >
               <div className="flex-1">{item.text}</div>
@@ -79,7 +81,9 @@ export default async function Page({ params }: Props) {
             >
               <Avatar name={item.speaker} />
               <div>
-                <div className="font-bold text-gray-800">{item.speaker}</div>
+                <div className="font-bold text-gray-800 dark:text-slate-400">
+                  {item.speaker}
+                </div>
               </div>
             </div>
           );

@@ -1,7 +1,7 @@
 export default function Page() {
   return (
-    <div className="container my-10 ">
-      <div className="prose">
+    <div className="container my-10">
+      <div className="prose dark:prose-invert">
         <h1>關於</h1>
         <p>
           TransPal

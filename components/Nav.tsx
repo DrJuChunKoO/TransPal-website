@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { LinkHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, LinkHTMLAttributes } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,10 +8,91 @@ import {
   ArrowLeftIcon,
   Bars2Icon,
   XMarkIcon,
+  SunIcon,
+  MoonIcon,
+  ComputerDesktopIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import useDarkMode from "@/utils/useDarkMode";
+function NavButton({
+  children,
+  className,
+  ...props
+}: {
+  children: React.ReactNode;
+  className?: string;
+} & ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      className={twMerge(
+        "p-2 rounded hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-white/5 dark:active:bg-white/10",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
+
+function DarkModeButton() {
+  const { theme, setTheme } = useDarkMode();
+
+  function handleThemeChange() {
+    if (theme === "dark") {
+      return setTheme("light");
+    }
+    setTheme("dark");
+  }
+  return (
+    <NavButton onClick={handleThemeChange}>
+      {theme === "dark" && (
+        <MoonIcon className="size-6 text-gray-800 dark:text-gray-200" />
+      )}
+
+      {theme === "light" && (
+        <SunIcon className="size-6 text-gray-800 dark:text-gray-200" />
+      )}
+    </NavButton>
+  );
+}
+
 function NavLink({
+  href,
+  children,
+  className,
+  ...props
+}: {
+  href: string;
+} & LinkHTMLAttributes<HTMLAnchorElement>) {
+  const isActive = usePathname() === href;
+  return (
+    <Link
+      href={href}
+      className={twMerge(
+        "text-gray-400 px-4 py-1 rounded transition-all relative",
+        isActive ? "text-gray-700" : "hover:text-gray-600 hover:bg-gray-100",
+        isActive
+          ? "text-slate-500 dark:text-[#6ECC93]"
+          : "dark:hover:text-white/50 dark:hover:bg-white/5",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <AnimatePresence>
+        {isActive && (
+          <motion.div
+            className="absolute -bottom-2 w-[75%] left-0 right-0 m-auto bg-slate-500 dark:bg-[#6ECC93] h-1 rounded-t-full"
+            layoutId="underline"
+          />
+        )}
+      </AnimatePresence>
+    </Link>
+  );
+}
+function NavLinkMobile({
   href,
   children,
   className,
@@ -45,9 +126,9 @@ export default function Nav() {
   const router = useRouter();
   return (
     <div>
-      <nav className="border-b border-gray-50 sticky top-0 bg-white/90 backdrop-blur-xl">
+      <nav className="border-b border-gray-50 sticky top-0 bg-white/90 backdrop-blur-xl dark:bg-[#232323]/90 dark:border-white/5">
         <div className="container py-2 flex flex-col gap-2 relative">
-          <div className="flex items-center gap-2 justify-between">
+          <div className="flex items-center gap-2 justify-between h-8">
             <div className="flex">
               <AnimatePresence>
                 {!isIndex && (
@@ -58,46 +139,53 @@ export default function Nav() {
                     className="overflow-hidden"
                   >
                     {isMessage ? (
-                      <button
+                      <NavButton
                         onClick={() =>
                           router.push(
                             currentPath.split("/").slice(0, -1).join("/")
                           )
                         }
-                        className="p-2 rounded hover:bg-gray-100 active:bg-gray-200 mr-2 block"
+                        className="mr-2"
                       >
                         <ArrowLeft className="size-6" />
-                      </button>
+                      </NavButton>
                     ) : (
-                      <Link
-                        href="/"
-                        className="p-2 rounded hover:bg-gray-100 active:bg-gray-200 mr-2 block"
+                      <NavButton
+                        onClick={() => router.push("/")}
+                        className="mr-2"
                       >
                         <ArrowLeft className="size-6" />
-                      </Link>
+                      </NavButton>
                     )}
                   </motion.div>
                 )}
               </AnimatePresence>
               <Link href="/" className="flex items-center gap-2">
-                <div className="text-xl font-bold text-gray-800">TransPal</div>
-                <div className="text-gray-500">會議記錄網站</div>
+                <div className="text-xl font-bold text-gray-800 dark:text-white">
+                  TransPal
+                </div>
+                <div className="text-gray-500 dark:text-gray-300">
+                  會議記錄網站
+                </div>
               </Link>
             </div>
-            <div className="items-center gap-1 hidden md:flex">
-              <NavLink href="/">首頁</NavLink>
-              <NavLink href="/about">關於</NavLink>
+            <div>
+              <DarkModeButton />
+              <NavButton
+                onClick={() => setIsOpen(!isOpen)}
+                className="md:hidden"
+              >
+                {isOpen ? (
+                  <XMarkIcon className="size-6 text-gray-800 dark:text-gray-200" />
+                ) : (
+                  <Bars2Icon className="size-6 text-gray-800 dark:text-gray-200" />
+                )}
+              </NavButton>
             </div>
-            <button
-              className="md:hidden p-2 rounded hover:bg-gray-100 active:bg-gray-200"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              {isOpen ? (
-                <XMarkIcon className="size-6 text-gray-800" />
-              ) : (
-                <Bars2Icon className="size-6 text-gray-800" />
-              )}
-            </button>
+          </div>
+          <div className="items-center gap-1 hidden md:flex">
+            <NavLink href="/">首頁</NavLink>
+            <NavLink href="/about">關於</NavLink>
           </div>
         </div>
         <AnimatePresence>
@@ -112,8 +200,8 @@ export default function Nav() {
                 className="container flex flex-col gap-2 pb-2"
                 onClick={() => setIsOpen(false)}
               >
-                <NavLink href="/">首頁</NavLink>
-                <NavLink href="/about">關於</NavLink>
+                <NavLinkMobile href="/">首頁</NavLinkMobile>
+                <NavLinkMobile href="/about">關於</NavLinkMobile>
               </motion.div>
             </motion.div>
           )}

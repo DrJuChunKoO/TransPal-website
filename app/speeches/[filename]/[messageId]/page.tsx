@@ -1,7 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { getSpeech, getSpeeches } from "@/utils/speeches";
 import Avatar from "@/components/Avatar";
-
+import { Quote } from "lucide-react";
 type Props = {
   params: {
     filename: string;
@@ -69,14 +69,34 @@ export default async function Page({ params }: Props) {
   const message = speech.content.find((item: any) => item.id === messageId)!;
   return (
     <div className="container my-10">
-      <div className="flex flex-col items-center justify-center w-[512px] max-w-full mx-auto p-6 bg-slate-50">
-        <Avatar name={message.speaker} />
-        <div className="text-xl text-gray-800 font-bold mt-2">
-          {message.speaker}
+      <div className="flex w-[512px] max-w-full mx-auto bg-slate-50 dark:bg-[#232323] relative rounded-xl overflow-hidden">
+        <div className="grow p-4">
+          <div className="flex gap-3">
+            <div className="shrink-0">
+              <Avatar name={message.speaker} />
+            </div>
+            <div>
+              <div className="text-xl text-gray-800 dark:text-white font-bold">
+                {message.speaker}
+              </div>
+              <div className="text-gray-700 dark:text-white/90 mt-2">
+                {message.text}
+              </div>
+            </div>
+          </div>
+          <div className="bg-current h-0.5 rounded-full w-full my-3 opacity-10"></div>
+          <div className="flex justify-between items-end w-full">
+            <div className="text-gray-500 dark:text-white/80 w-full">
+              {name}
+            </div>
+            <div className="text-gray-500 dark:text-white/80 text-right w-full">
+              {date}
+            </div>
+          </div>
         </div>
-        <div className="text-gray-700 my-4">{message.text}</div>
-        <div className="text-gray-500 text-right w-full">{name}</div>
-        <div className="text-gray-500 text-right w-full text-sm">{date}</div>
+        <div className="flex bg-[#6ECC93] p-6">
+          <Quote className="size-8 text-white/50" />
+        </div>
       </div>
     </div>
   );
