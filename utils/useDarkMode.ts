@@ -3,7 +3,10 @@ import { useLocalStorage } from "usehooks-ts";
 export default function useDarkMode() {
   const [theme, setTheme] = useLocalStorage<"dark" | "light">(
     "theme",
-    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+    typeof window !== "undefined" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light"
   );
   useEffect(() => {
     const root = window.document.documentElement;
