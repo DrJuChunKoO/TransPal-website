@@ -2,7 +2,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { getSpeech, getSpeeches } from "@/utils/speeches";
 import Avatar from "@/components/Avatar";
 import Link from "next/link";
-
+import { LinkIcon } from "@heroicons/react/24/solid";
 type Props = {
   params: {
     filename: string;
@@ -70,7 +70,9 @@ export default async function Page({ params }: Props) {
                 href={`/speeches/${params.filename}/${item.id}`}
                 className="opacity-0 group-hover:opacity-100"
               >
-                <div className="text-gray-400">🔗</div>
+                <div className="text-gray-400">
+                  <LinkIcon className="size-5" />
+                </div>
               </Link>
             </div>
           );
