@@ -51,7 +51,7 @@ export async function GET(request: Request) {
                 opacity: 0.75,
               }}
             >
-              {message}
+              {message.slice(0, 70) + (message.length > 78 ? "..." : "")}
             </div>
             <div style={{ flex: 1 }}></div>
             <div
