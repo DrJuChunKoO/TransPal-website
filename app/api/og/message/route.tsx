@@ -26,7 +26,6 @@ export async function GET(request: Request) {
           <div
             style={{
               height: "100%",
-
               display: "flex",
               flexDirection: "column",
               alignItems: "flex-start",
@@ -36,6 +35,7 @@ export async function GET(request: Request) {
               width: "1000px",
             }}
           >
+            {" "}
             <div
               style={{
                 fontSize: 64,
@@ -46,7 +46,7 @@ export async function GET(request: Request) {
             </div>
             <div
               style={{
-                fontSize: 64,
+                fontSize: 48,
                 color: `rgb(55, 65, 81)`,
                 opacity: 0.75,
               }}
