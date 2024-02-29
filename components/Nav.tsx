@@ -126,7 +126,7 @@ export default function Nav() {
   const router = useRouter();
   return (
     <div>
-      <nav className="border-b border-gray-50 sticky top-0 bg-white/90 backdrop-blur-xl dark:bg-[#232323]/90 dark:border-white/5">
+      <nav className="border-b border-gray-50 sticky top-0 bg-gray-50/50 backdrop-blur-xl dark:bg-[#232323]/90 dark:border-white/5">
         <div className="container py-2 flex flex-col gap-2 relative">
           <div className="flex items-center gap-2 justify-between h-8">
             <div className="flex">
