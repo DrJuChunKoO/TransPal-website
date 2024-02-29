@@ -94,8 +94,8 @@ export default async function Page({ params }: Props) {
             </div>
           </div>
         </div>
-        <div className="flex bg-[#6ECC93] p-6">
-          <Quote className="size-8 text-white/50" />
+        <div className="flex bg-[#6ECC93] p-5 skew-x-6 pr-7 translate-x-2">
+          <Quote className="size-8 text-white/50 -skew-x-6" />
         </div>
       </div>
     </div>
