@@ -1,13 +1,8 @@
 import { ImageResponse } from "next/og";
-import { getSpeech } from "@/utils/speeches";
 export const runtime = "edge";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-
-  // ?title=<title>
-  // &date=<date>
-  // &speakers=<speakers>
   const data = searchParams.get("data");
 
   if (data) {
@@ -19,50 +14,93 @@ export async function GET(request: Request) {
             height: "100%",
             width: "100%",
             display: "flex",
-            flexDirection: "column",
             alignItems: "flex-start",
             justifyContent: "center",
             backgroundColor: "white",
-            padding: "50px 100px",
           }}
         >
           <div
             style={{
-              fontSize: 36,
-              color: `rgb(31, 41, 55)`,
-              opacity: 0.5,
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              justifyContent: "center",
+              backgroundColor: "white",
+              padding: "50px 100px",
+              width: "1000px",
             }}
           >
-            {date}
+            <div
+              style={{
+                fontSize: 64,
+                color: `rgb(31, 41, 55)`,
+              }}
+            >
+              {title}
+            </div>
+            <div
+              style={{
+                fontSize: 48,
+                color: `rgb(55, 65, 81)`,
+                opacity: 0.75,
+              }}
+            >
+              {speakers}
+            </div>
+            <div style={{ flex: 1 }}></div>
+            <div
+              style={{
+                backgroundColor: "rgb(31, 41, 55)",
+                height: "2px",
+                opacity: 0.125,
+                width: "100%",
+                borderRadius: "1px",
+                margin: "16px 0",
+              }}
+            />
+            <div
+              style={{
+                fontSize: 36,
+                color: `rgb(107, 114, 128)`,
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <span>{date}</span>
+            </div>
           </div>
-          <div style={{ flex: 1 }}></div>
           <div
             style={{
-              fontSize: 72,
-              color: `rgb(31, 41, 55)`,
-              fontWeight: "bold",
+              backgroundColor: "#6ECC93",
+              display: "flex",
+              width: "200px",
+              height: "100%",
+              padding: "25px",
+              justifyContent: "center",
             }}
           >
-            {title}
-          </div>
-          <div
-            style={{
-              fontSize: 36,
-              color: `rgb(31, 41, 55)`,
-              opacity: 0.75,
-            }}
-          >
-            {speakers}
-          </div>
-          <div style={{ flex: 1 }}></div>
-          <div
-            style={{
-              fontSize: 36,
-              color: `rgb(31, 41, 55)`,
-              opacity: 0.5,
-            }}
-          >
-            transpal.juchunko.com
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="100"
+              height="100"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              style={{
+                display: "flex",
+                color: "white",
+                opacity: 0.5,
+              }}
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+              />
+            </svg>
           </div>
         </div>
       ),

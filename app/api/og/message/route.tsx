@@ -1,5 +1,4 @@
 import { ImageResponse } from "next/og";
-import { getSpeech } from "@/utils/speeches";
 export const runtime = "edge";
 
 export async function GET(request: Request) {
