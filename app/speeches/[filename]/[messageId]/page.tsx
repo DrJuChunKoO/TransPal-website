@@ -32,8 +32,8 @@ export async function generateMetadata(
             JSON.stringify({
               title: speech.info.name,
               date: speech.info.date,
-              message: message.text,
               speaker: message.speaker,
+              message: message.text,
             })
           )}`,
         },

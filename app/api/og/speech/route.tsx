@@ -107,6 +107,7 @@ export async function GET(request: Request) {
       {
         width: 1200,
         height: 630,
+        emoji: "fluentFlat",
       }
     );
   }
