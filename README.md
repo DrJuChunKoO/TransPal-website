@@ -32,6 +32,6 @@ npm run dev
 ## Add Profile Picture
 
 1. Crop the profile picture into a square
-2. Convert the image to webp format on [Squoosh](https://squoosh.app/)
-3. Set the image file name as `{speaker name}.webp`
+2. Convert the image to jpg format on [Squoosh](https://squoosh.app/)
+3. Set the image file name as `{speaker name}.jpg`
 4. Place it in the `public/avatars/` directory

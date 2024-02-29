@@ -32,6 +32,6 @@ npm run dev
 ## 新增大頭貼
 
 1. 將大頭貼裁減為正方形
-2. 在 [Squoosh](https://squoosh.app/) 上將圖片轉檔為 webp 格式
-3. 將圖片檔案名稱設為 `{講者名稱}.webp`
+2. 在 [Squoosh](https://squoosh.app/) 上將圖片轉檔為 jpg 格式
+3. 將圖片檔案名稱設為 `{講者名稱}.jpg`
 4. 放置於 `public/avatars/` 目錄下

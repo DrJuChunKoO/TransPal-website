@@ -22,7 +22,7 @@ export default async function Avatar({
   className?: string;
 }) {
   try {
-    await fs.access(process.cwd() + "/public/avatars/" + name + ".webp");
+    await fs.access(process.cwd() + "/public/avatars/" + name + ".jpg");
 
     return (
       <div
@@ -32,7 +32,7 @@ export default async function Avatar({
         )}
       >
         <Image
-          src={"/avatars/" + name + ".webp"}
+          src={"/avatars/" + name + ".jpg"}
           width={48}
           height={48}
           className="size-12 object-cover object-center"
