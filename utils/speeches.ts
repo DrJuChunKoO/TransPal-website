@@ -32,7 +32,7 @@ export const getSpeech = cache(async (filename: string) => {
     "utf-8"
   );
   const fileParsed: {
-    info: { name: string; date: string };
+    info: { name: string; date: string; description?: string };
     content: {
       id: string;
       speaker: string;

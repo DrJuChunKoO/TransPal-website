@@ -3,6 +3,7 @@ import { getSpeech, getSpeeches } from "@/utils/speeches";
 import Avatar from "@/components/Avatar";
 import Link from "next/link";
 import { LinkIcon } from "@heroicons/react/24/solid";
+import Markdown from "react-markdown";
 type Props = {
   params: {
     filename: string;
@@ -52,12 +53,20 @@ export default async function Page({ params }: Props) {
     speech.info.name ||
     decodeURIComponent(params.filename).split(".").slice(0, -1).join(".");
   const date = speech.info.date;
+  const description = speech.info?.description;
   return (
     <div className="container my-10">
       <div className="text-4xl font-bold text-gray-800 dark:text-white">
         {name}
       </div>
       <div className="text-gray-500 dark:text-gray-200 mb-6">{date}</div>
+      {description && (
+        <div className="prose prose-sm w-full dark:prose-invert my-6">
+          <div className="h-[2px] bg-current rounded-full w-full opacity-10" />
+          <Markdown>{description || ""}</Markdown>
+          <div className="h-[2px] bg-current rounded-full w-full opacity-10" />
+        </div>
+      )}
       <div className="flex flex-col gap-4">
         {speech.content.map((item: any, index: number) => {
           const text = (
