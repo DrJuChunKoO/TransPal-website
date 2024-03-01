@@ -69,7 +69,7 @@ export default function Search() {
         placeholder="在這裡輸入關鍵字來搜尋，像是「community」、「電子簽章」等等"
       />
       <div className="-mx-4">
-        {search.length > 1 &&
+        {search.length >= 1 &&
           filteredSearch.map((item) => (
             <Link
               key={item.id}
@@ -91,6 +91,11 @@ export default function Search() {
               </div>
             </Link>
           ))}
+        {search.length > 1 && filteredSearch.length === 0 && (
+          <div className="text-gray-500 dark:text-white/50 text-center my-12">
+            無法找到符合的結果，請嘗試其他關鍵字
+          </div>
+        )}
       </div>
     </div>
   );
