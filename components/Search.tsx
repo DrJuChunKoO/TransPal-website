@@ -18,7 +18,14 @@ function HighlightText({
     <span>
       {parts.map((part, index) => {
         if (regex.test(part)) {
-          return <mark key={index}>{part}</mark>;
+          return (
+            <span
+              key={index}
+              className="bg-yellow-200 dark:bg-yellow-500 text-yellow-950 rounded"
+            >
+              {part}
+            </span>
+          );
         }
         return <span key={index}>{part}</span>;
       })}
@@ -59,7 +66,7 @@ export default function Search() {
       <input
         type="text"
         value={search}
-        className="w-full p-2 border border-gray-300 rounded-md my-4"
+        className="w-full p-2 border border-gray-300 rounded-md my-4 bg-transparent outline-none focus:border-gray-500 dark:border-white/5 dark:bg-white/5 dark:focus:border-white/10"
         onChange={(e) => setSearch(e.target.value)}
         placeholder="在這裡輸入關鍵字來搜尋，像是「community」、「電子簽章」等等"
       />
@@ -69,15 +76,17 @@ export default function Search() {
             <Link
               key={item.id}
               href={`${item.url}#${item.id}`}
-              className="py-2 px-4 rounded hover:bg-slate-50 block"
+              className="py-2 px-4 rounded hover:bg-slate-50 dark:hover:bg-white/5 block"
             >
               <div className="font-bold">
                 {item.name}{" "}
-                <span className="text-gray-500 font-normal">{item.date}</span>
+                <span className="text-gray-500 dark:text-white/50 font-normal">
+                  {item.date}
+                </span>
               </div>
 
               <div>
-                <span className="text-gray-500 font-normal bg-slate-50 text-sm border border-gray-200 rounded p-1 mr-1">
+                <span className="text-gray-500 dark:text-white/50 font-normal bg-slate-50 dark:bg-white/5 text-sm border border-gray-200 dark:border-white/5 rounded p-1 mr-1">
                   {item.speaker}
                 </span>
                 <HighlightText text={item.text} keywords={splitedSearch} />
