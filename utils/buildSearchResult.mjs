@@ -11,8 +11,8 @@ async function buildSearchResult() {
     );
     const { info, content } = speechData;
     result.push({
-      title: speechData.title,
-      date: speechData.date,
+      name: info.name,
+      date: info.date,
       url: `/speeches/${info.date}%20${info.slug}`,
       content: content.map(({ id, text, speaker }) => ({
         id,
