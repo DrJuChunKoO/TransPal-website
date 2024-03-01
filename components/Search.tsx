@@ -90,7 +90,7 @@ export default function Search() {
                 <HighlightText text={item.text} keywords={splitedSearch} />
               </div>
             </Link>
-          ))}{" "}
+          ))}
       </div>
     </div>
   );
