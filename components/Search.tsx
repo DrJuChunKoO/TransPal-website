@@ -21,7 +21,7 @@ function HighlightText({
           return (
             <span
               key={index}
-              className="bg-yellow-200 dark:bg-yellow-500 text-yellow-950 rounded"
+              className="bg-yellow-200 dark:bg-yellow-500 text-yellow-950 rounded px-0.5"
             >
               {part}
             </span>
@@ -86,7 +86,7 @@ export default function Search() {
               </div>
 
               <div>
-                <span className="text-gray-500 dark:text-white/50 font-normal bg-slate-50 dark:bg-white/5 text-sm border border-gray-200 dark:border-white/5 rounded p-1 mr-1">
+                <span className="text-gray-500 dark:text-white/50 font-normal bg-slate-50 dark:bg-white/5 text-sm border border-gray-200 dark:border-white/5 rounded px-1 py-0.5 mr-1 tracking-wide">
                   {item.speaker}
                 </span>
                 <HighlightText text={item.text} keywords={splitedSearch} />
