@@ -62,8 +62,9 @@ export default async function Page({ params }: Props) {
         {speech.content.map((item: any, index: number) => {
           const text = (
             <div
-              className="ml-12 text-gray-700 dark:text-gray-300 -mt-4 py-1 px-2 hover:bg-gray-50 dark:hover:bg-white/5 rounded flex justify-between items-center gap-4 group"
+              className="ml-12 text-gray-700 dark:text-gray-300 -mt-4 py-1 px-2 hover:bg-gray-50 dark:hover:bg-white/5 rounded flex justify-between items-center gap-4 group target:bg-gray-200 dark:target:bg-white/10"
               key={`text-${index}`}
+              id={item.id}
             >
               <div className="flex-1">{item.text}</div>
               <Link

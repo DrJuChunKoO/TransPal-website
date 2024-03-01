@@ -1,0 +1,90 @@
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+import searchResult from "../public/searchResult.json";
+
+function HighlightText({
+  text,
+  keywords,
+}: {
+  text: string;
+  keywords: string[];
+}) {
+  // CJK Supported text highlighter
+  // https://stackoverflow.com/a/43235765
+  const regex = new RegExp(`(${keywords.join("|")})`, "gi");
+  const parts = text.split(regex);
+  return (
+    <span>
+      {parts.map((part, index) => {
+        if (regex.test(part)) {
+          return <mark key={index}>{part}</mark>;
+        }
+        return <span key={index}>{part}</span>;
+      })}
+    </span>
+  );
+}
+
+export default function Search() {
+  const [search, setSearch] = useState("");
+  const splitedSearch = search
+    .trim()
+    .split(" ")
+    .map((x) => x.toLowerCase());
+  const filteredSearch = searchResult
+    .map((item) => {
+      return item.content.map((x) => ({
+        name: item.name,
+        date: item.date,
+        url: item.url,
+        ...x,
+      }));
+    })
+    .flat()
+    .map((item) => {
+      let score = 0;
+      for (let keyword of splitedSearch) {
+        if (item.name.toLowerCase().includes(keyword)) score += 1;
+        if (item.speaker.toLowerCase().includes(keyword)) score += 3;
+        if (item.text.toLowerCase().includes(keyword)) score += 10;
+      }
+      return { ...item, score };
+    })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b?.score - a?.score)
+    .slice(0, 10);
+  return (
+    <div>
+      <input
+        type="text"
+        value={search}
+        className="w-full p-2 border border-gray-300 rounded-md my-4"
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="在這裡輸入關鍵字來搜尋，像是「community」、「電子簽章」等等"
+      />
+      <div className="-mx-4">
+        {search.length > 1 &&
+          filteredSearch.map((item) => (
+            <Link
+              key={item.id}
+              href={`${item.url}#${item.id}`}
+              className="py-2 px-4 rounded hover:bg-slate-50 block"
+            >
+              <div className="font-bold">
+                {item.name}{" "}
+                <span className="text-gray-500 font-normal">{item.date}</span>
+              </div>
+
+              <div>
+                <span className="text-gray-500 font-normal bg-slate-50 text-sm border border-gray-200 rounded p-1 mr-1">
+                  {item.speaker}
+                </span>
+                <HighlightText text={item.text} keywords={splitedSearch} />
+              </div>
+            </Link>
+          ))}{" "}
+      </div>
+    </div>
+  );
+}

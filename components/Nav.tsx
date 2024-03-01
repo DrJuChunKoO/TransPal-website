@@ -184,7 +184,8 @@ export default function Nav() {
             </div>
           </div>
           <div className="items-center gap-1 hidden md:flex">
-            <NavLink href="/">首頁</NavLink>
+            <NavLink href="/">首頁</NavLink>{" "}
+            <NavLink href="/search">搜尋</NavLink>
             <NavLink href="/about">關於</NavLink>
           </div>
         </div>
@@ -201,6 +202,7 @@ export default function Nav() {
                 onClick={() => setIsOpen(false)}
               >
                 <NavLinkMobile href="/">首頁</NavLinkMobile>
+                <NavLinkMobile href="/search">搜尋</NavLinkMobile>
                 <NavLinkMobile href="/about">關於</NavLinkMobile>
               </motion.div>
             </motion.div>
