@@ -100,10 +100,10 @@ export default async function Page({ params }: Props) {
             </div>
           );
           return speech.content[index - 1]?.speaker !== item.speaker ? (
-            <>
+            <div key={item.id}>
               {avatar}
               {text}
-            </>
+            </div>
           ) : (
             text
           );
