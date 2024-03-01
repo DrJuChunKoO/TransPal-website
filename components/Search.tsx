@@ -10,8 +10,6 @@ function HighlightText({
   text: string;
   keywords: string[];
 }) {
-  // CJK Supported text highlighter
-  // https://stackoverflow.com/a/43235765
   const regex = new RegExp(`(${keywords.join("|")})`, "gi");
   const parts = text.split(regex);
   return (
