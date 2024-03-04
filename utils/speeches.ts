@@ -21,7 +21,9 @@ export const getSpeeches = cache(async () => {
         };
       })
   );
-  return speeches;
+  return speeches.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
 });
 export const getSpeech = cache(async (filename: string) => {
   const file = await fs.readFile(
