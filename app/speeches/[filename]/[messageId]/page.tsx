@@ -1,7 +1,9 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { getSpeech, getSpeeches } from "@/utils/speeches";
 import Avatar from "@/components/Avatar";
-import { Quote } from "lucide-react";
+import { Quote, ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import Share from "./share";
 type Props = {
   params: {
     filename: string;
@@ -59,6 +61,7 @@ export async function generateStaticParams() {
     )
     .flat();
 }
+
 export default async function Page({ params }: Props) {
   const speech = await getSpeech(params.filename);
   const name =
@@ -67,9 +70,22 @@ export default async function Page({ params }: Props) {
   const date = speech.info.date;
   const messageId = params.messageId;
   const message = speech.content.find((item: any) => item.id === messageId)!;
+
   return (
     <div className="container my-10">
-      <div className="flex w-[512px] max-w-full mx-auto bg-slate-50 dark:bg-[#232323] relative rounded-xl overflow-hidden">
+      <div className="flex w-[512px] max-w-full mx-auto mb-2 justify-between items-center">
+        <Link
+          href={`/speeches/${params.filename}#${messageId}`}
+          className="px-4 text-gray-800 dark:text-white flex gap-1 items-center flex-col"
+        >
+          <div className="rounded-full bg-slate-50 dark:bg-white/5 hover:bg-slate-200 active:bg-slate-300 dark:hover:bg-white/10 dark:active:bg-white/15 p-2">
+            <ArrowLeft />
+          </div>
+          <div className="text-sm opacity-50">返回</div>
+        </Link>
+        <Share />
+      </div>
+      <div className="flex w-[512px] max-w-full mx-auto bg-slate-50 dark:bg-[#232323] relative rounded-xl overflow-hidden shadow-sm">
         <div className="grow p-4">
           <div className="flex gap-3">
             <div className="shrink-0">
