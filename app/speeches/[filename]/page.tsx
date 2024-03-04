@@ -1,9 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { getSpeech, getSpeeches } from "@/utils/speeches";
-import Avatar from "@/components/Avatar";
-import Link from "next/link";
-import { LinkIcon } from "@heroicons/react/24/solid";
 import Markdown from "react-markdown";
+import SpeechContent from "@/components/SpeechContent";
 type Props = {
   params: {
     filename: string;
@@ -67,48 +65,7 @@ export default async function Page({ params }: Props) {
           <div className="h-[2px] bg-current rounded-full w-full opacity-10" />
         </div>
       )}
-      <div className="flex flex-col gap-4">
-        {speech.content.map((item: any, index: number) => {
-          const text = (
-            <div
-              className="ml-12 text-gray-700 dark:text-gray-300 -mt-4 py-1 px-2 hover:bg-gray-50 dark:hover:bg-white/5 rounded flex justify-between items-center gap-4 group target:bg-gray-200 dark:target:bg-white/10"
-              key={`text-${index}`}
-              id={item.id}
-            >
-              <div className="flex-1">{item.text}</div>
-              <Link
-                href={`/speeches/${params.filename}/${item.id}`}
-                className="opacity-0 group-hover:opacity-100"
-              >
-                <div className="text-gray-400">
-                  <LinkIcon className="size-5" />
-                </div>
-              </Link>
-            </div>
-          );
-          const avatar = (
-            <div
-              className="flex items-start justify-start gap-2 -mb-6"
-              key={`avatar-${index}`}
-            >
-              <Avatar name={item.speaker} />
-              <div>
-                <div className="font-bold text-gray-800 dark:text-slate-400">
-                  {item.speaker}
-                </div>
-              </div>
-            </div>
-          );
-          return speech.content[index - 1]?.speaker !== item.speaker ? (
-            <div key={item.id}>
-              {avatar}
-              {text}
-            </div>
-          ) : (
-            text
-          );
-        })}
-      </div>
+      <SpeechContent content={speech.content} filename={params.filename} />
     </div>
   );
 }
