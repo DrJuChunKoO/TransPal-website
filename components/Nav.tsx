@@ -142,7 +142,8 @@ export default function Nav() {
                       <NavButton
                         onClick={() =>
                           router.push(
-                            currentPath.split("/").slice(0, -1).join("/")
+                            currentPath.split("/").slice(0, -1).join("/") +
+                              `/#${currentPath.split("/").at(-1)}`
                           )
                         }
                         className="mr-2"
