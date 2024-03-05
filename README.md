@@ -11,7 +11,7 @@ Meeting Transcript Recording Website
 
 TransPal consists of three parts
 
-- Transcription tool: (Under development, currently, .srt subtitle files transcribed via https://www.vocol.ai/ can be imported into the editor)
+- Transcription tool: https://github.com/DrJuChunKoO/TransPal-transcriber
 - Editor: https://github.com/DrJuChunKoO/TransPal-editor
 - Website: https://github.com/DrJuChunKoO/TransPal-website
 

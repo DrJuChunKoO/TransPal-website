@@ -11,7 +11,7 @@
 
 TransPal 由三個部分組成
 
-- 轉錄工具：（開發中，目前可透過 https://www.vocol.ai/ 轉錄的 .srt 字幕檔匯入編輯器）
+- 轉錄工具：https://github.com/DrJuChunKoO/TransPal-transcriber
 - 編輯器：https://github.com/DrJuChunKoO/TransPal-editor
 - 網站：https://github.com/DrJuChunKoO/TransPal-website
 
@@ -31,7 +31,7 @@ npm run dev
 
 ## 新增大頭貼
 
-1. 將大頭貼裁減為正方形
+1. 將大頭貼裁剪為正方形
 2. 在 [Squoosh](https://squoosh.app/) 上將圖片轉檔為 jpg 格式
 3. 將圖片檔案名稱設為 `{講者名稱}.jpg`
 4. 放置於 `public/avatars/` 目錄下
