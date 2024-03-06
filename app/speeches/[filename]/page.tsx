@@ -54,14 +54,20 @@ export default async function Page({ params }: Props) {
   const description = speech.info?.description;
   return (
     <div className="container my-10">
-      <div className="text-4xl font-bold text-gray-800 dark:text-white">
+      <div className="text-2xl md:text-4xl font-bold text-gray-800 dark:text-white">
         {name}
       </div>
-      <div className="text-gray-500 dark:text-gray-200 mb-6">{date}</div>
+      <div className="text-gray-500 dark:text-gray-200 mb-6 md:text-xl md:mt-1">
+        {date}
+      </div>
       {description && (
         <div className="prose prose-sm w-full dark:prose-invert my-6">
           <div className="h-[2px] bg-current rounded-full w-full opacity-10" />
-          <Markdown>{description || ""}</Markdown>
+          <Markdown
+            className={"prose prose-sm w-full dark:prose-invert my-6 break-all"}
+          >
+            {description || ""}
+          </Markdown>
           <div className="h-[2px] bg-current rounded-full w-full opacity-10" />
         </div>
       )}
