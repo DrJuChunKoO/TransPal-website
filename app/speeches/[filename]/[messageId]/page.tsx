@@ -100,19 +100,31 @@ export default async function Page({ params }: Props) {
               </div>
             </div>
           </div>
-          <div className="bg-current h-0.5 rounded-full w-full my-3 opacity-10"></div>
-          <div className="flex justify-between items-end w-full">
-            <div className="text-gray-500 dark:text-white/80 w-full">
-              {name}
+          <div className="bg-current h-0.5 rounded-full w-full my-3 opacity-10 max-md:hidden"></div>
+          <div className="justify-between items-end w-full hidden md:flex text-gray-500 dark:text-white/80 text-sm">
+            <div className=" flex-1">
+              <Link
+                href={`/speeches/${params.filename}#${messageId}`}
+                className="underline hover:text-gray-600 dark:hover:text-white/80 underline-offset-2"
+              >
+                {name}
+              </Link>
             </div>
-            <div className="text-gray-500 dark:text-white/80 text-right w-full">
-              {date}
-            </div>
+            <div className="text-right">{date}</div>
           </div>
         </div>
-        <div className="flex bg-[#6ECC93] p-5">
+        <div className="hidden sm:flex bg-[#6ECC93] p-5">
           <Quote className="size-8 text-white/50" />
         </div>
+      </div>
+      <div className="w-[512px] max-w-full mx-auto mt-2 text-right px-4 text-gray-500 dark:text-white/80 text-sm md:hidden">
+        <Link
+          href={`/speeches/${params.filename}#${messageId}`}
+          className="underline hover:text-gray-600 dark:hover:text-white/80 underline-offset-2"
+        >
+          {name}
+        </Link>{" "}
+        · {date}
       </div>
     </div>
   );
