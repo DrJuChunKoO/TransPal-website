@@ -165,7 +165,7 @@ export default function Nav() {
                 <div className="text-xl font-bold text-gray-800 dark:text-white">
                   TransPal
                 </div>
-                <div className="text-gray-500 dark:text-gray-300">
+                <div className="text-gray-500 dark:text-gray-300 max-md:hidden">
                   會議記錄網站
                 </div>
               </Link>
