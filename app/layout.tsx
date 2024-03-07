@@ -22,8 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW">
-      <body className={twMerge(inter.className, "dark:bg-[#1C1C1C]")}>
-        <div className="dark:text-gray-50">
+      <body
+        className={twMerge(
+          inter.className,
+          "dark:bg-[#1C1C1C] dark:text-gray-50 text-gray-950"
+        )}
+      >
+        <div>
           <Nav />
           {children}
         </div>

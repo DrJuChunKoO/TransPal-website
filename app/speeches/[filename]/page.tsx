@@ -2,6 +2,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { getSpeech, getSpeeches } from "@/utils/speeches";
 import Markdown from "react-markdown";
 import SpeechContent from "@/components/SpeechContent";
+import SpeechAI from "@/components/SpeechAI";
 type Props = {
   params: {
     filename: string;
@@ -72,6 +73,7 @@ export default async function Page({ params }: Props) {
         </div>
       )}
       <SpeechContent content={speech.content} filename={params.filename} />
+      <SpeechAI />
     </div>
   );
 }
