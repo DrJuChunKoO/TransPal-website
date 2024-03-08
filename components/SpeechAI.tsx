@@ -67,8 +67,14 @@ export default function SpeechAI() {
             <Message from="me" content="這場會議聊了什麼？" />
             <Message from="ai" content="正在思考⋯" />
           </motion.div>
-          <div className="bg-slate-50/90 text-slate-800 dark:text-slate-100 dark:bg-[#202020]/90 backdrop-blur-xl rounded-b-lg p-2 shadow-lg">
-            在此輸入文字⋯⋯
+          <div className="bg-slate-100/90 text-slate-800 dark:text-slate-100 dark:bg-[#252525]/90 backdrop-blur-xl rounded-b-lg p-2 shadow-lg flex gap-2">
+            <input
+              className="w-full p-2 rounded-lg bg-white/90 dark:bg-white/10 outline-none"
+              placeholder="在此輸入文字⋯⋯"
+            />
+            <button className="py-2 px-4 rounded-lg bg-slate-500 hover:bg-slate-600 active:bg-slate-700 text-white shrink-0">
+              送出
+            </button>
           </div>
         </motion.div>
       ) : (
