@@ -73,7 +73,7 @@ export default async function Page({ params }: Props) {
         </div>
       )}
       <SpeechContent content={speech.content} filename={params.filename} />
-      <SpeechAI />
+      <SpeechAI filename={params.filename} />
     </div>
   );
 }

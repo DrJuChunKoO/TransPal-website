@@ -1,8 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BotMessageSquare, Minus, Bot, User } from "lucide-react";
+import {
+  BotMessageSquare,
+  Minus,
+  Bot,
+  User,
+  RotateCcw,
+  MessageCircleQuestion,
+} from "lucide-react";
 import { twMerge } from "tailwind-merge";
+import { useCompletion } from "ai/react";
+import { useLocalStorage } from "usehooks-ts";
 function Message({ from, content }: { from: "me" | "ai"; content: string }) {
   return (
     <div className="flex w-full gap-2 items-start mb-2">
@@ -30,8 +39,61 @@ function Message({ from, content }: { from: "me" | "ai"; content: string }) {
   );
 }
 
-export default function SpeechAI() {
+export default function SpeechAI({ filename }: { filename: string }) {
+  const messageContainerRef = useRef<HTMLDivElement>(null);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
   const [active, setActive] = useState(false);
+  const [messages, setMessages] = useLocalStorage<
+    {
+      content: string;
+      role: "user" | "assistant";
+    }[]
+  >(`speech-ai-messages-${filename}`, []);
+  const {
+    completion,
+    input,
+    setInput,
+    isLoading,
+    handleInputChange,
+    handleSubmit,
+  } = useCompletion({
+    body: {
+      filename,
+      messages,
+    },
+  });
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    setMessages(messages.concat({ role: "user", content: input }));
+    setInput("");
+    return handleSubmit(e);
+  }
+  function sendDefaultMessage(message: string) {
+    setInput(message);
+    setTimeout(() => {
+      submitButtonRef.current?.click();
+    }, 100);
+  }
+
+  useEffect(() => {
+    if (completion) {
+      if (
+        messages.length > 0 &&
+        messages[messages.length - 1].role === "assistant"
+      ) {
+        setMessages([
+          ...messages.slice(0, -1),
+          { role: "assistant", content: completion },
+        ]);
+      } else {
+        setMessages([...messages, { role: "assistant", content: completion }]);
+      }
+
+      if (messageContainerRef.current) {
+        messageContainerRef.current.scrollTop =
+          messageContainerRef.current.scrollHeight;
+      }
+    }
+  }, [completion]);
   return (
     <>
       {active ? (
@@ -53,29 +115,82 @@ export default function SpeechAI() {
             <div className="flex gap-2 items-center">
               <button
                 className="p-2 rounded-lg hover:bg-black/5 active:bg-black/10 text-white"
+                onClick={() => setMessages([])}
+              >
+                <RotateCcw size={24} />
+              </button>
+              <button
+                className="p-2 rounded-lg hover:bg-black/5 active:bg-black/10 text-white"
                 onClick={() => setActive(false)}
               >
                 <Minus size={24} />
               </button>
             </div>
           </motion.div>
-          <motion.div className="bg-white/90 dark:bg-[#232323]/90 backdrop-blur-xl overflow-y-scroll h-[400px] shadow-lg p-2">
+          <motion.div
+            className="bg-white/90 dark:bg-[#232323]/90 backdrop-blur-xl overflow-y-scroll h-[400px] shadow-lg p-2"
+            ref={messageContainerRef}
+          >
             <Message
               from="ai"
               content="嗨，我是 TransPal AI！有什麼可以幫助你的？"
             />
-            <Message from="me" content="這場會議聊了什麼？" />
-            <Message from="ai" content="正在思考⋯" />
+
+            {messages.map((m, index) => (
+              <Message
+                from={m.role === "user" ? "me" : "ai"}
+                content={m.content}
+                key={index}
+              />
+            ))}
+            <AnimatePresence>
+              {!messages.length && (
+                <motion.div
+                  className="flex gap-2 flex-col pl-12 text-pink-800 dark:text-pink-100"
+                  initial={{ opacity: 0, y: 100 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 100 }}
+                >
+                  {[
+                    `會議主題是什麼？`,
+                    `會議達成了哪些共識和決策？`,
+                    `會議中有哪些重要的討論？`,
+                    `總結會議討論的重點`,
+                  ].map((message, index) => (
+                    <button
+                      onClick={() => sendDefaultMessage(message)}
+                      className="flex gap-2 hover:opacity-75 active:opacity-50"
+                      key={index}
+                    >
+                      <MessageCircleQuestion />
+                      {message}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
-          <div className="bg-slate-100/90 text-slate-800 dark:text-slate-100 dark:bg-[#252525]/90 backdrop-blur-xl rounded-b-lg p-2 shadow-lg flex gap-2">
-            <input
-              className="w-full p-2 rounded-lg bg-white/90 dark:bg-white/10 outline-none"
-              placeholder="在此輸入文字⋯⋯"
-            />
-            <button className="py-2 px-4 rounded-lg bg-slate-500 hover:bg-slate-600 active:bg-slate-700 text-white shrink-0">
-              送出
-            </button>
-          </div>
+
+          <form
+            className="bg-slate-100/90 text-slate-800 dark:text-slate-100 dark:bg-[#252525]/90 backdrop-blur-xl rounded-b-lg p-2 shadow-lg"
+            onSubmit={onSubmit}
+          >
+            <div className="flex gap-2">
+              <input
+                className="w-full p-2 rounded-lg bg-white/90 dark:bg-white/10 outline-none"
+                placeholder="在此輸入文字⋯⋯"
+                value={input}
+                onChange={handleInputChange}
+              />
+              <button
+                type="submit"
+                ref={submitButtonRef}
+                className="py-2 px-4 rounded-lg bg-slate-500 hover:bg-slate-600 active:bg-slate-700 text-white shrink-0"
+              >
+                送出
+              </button>
+            </div>
+          </form>
         </motion.div>
       ) : (
         <motion.div
