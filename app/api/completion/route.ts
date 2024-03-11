@@ -1,9 +1,11 @@
 import OpenAI from "openai";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { promises as fs } from "fs";
-// Create an OpenAI API client (that's edge friendly!)
+// Create an OpenAI API client
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+  baseURL:
+    "https://gateway.ai.cloudflare.com/v1/3f1f83a939b2fc99ca45fd8987962514/open-ai/openai",
 });
 
 export async function POST(req: Request) {
