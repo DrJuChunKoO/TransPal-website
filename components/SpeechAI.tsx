@@ -152,10 +152,10 @@ export default function SpeechAI({ filename }: { filename: string }) {
                   exit={{ opacity: 0, y: 100 }}
                 >
                   {[
-                    `會議主題是什麼？`,
-                    `會議達成了哪些共識和決策？`,
-                    `會議中有哪些重要的討論？`,
-                    `總結會議討論的重點`,
+                    `對話主題是什麼？`,
+                    `對話達成了哪些共識和決策？`,
+                    `對話中有哪些重要的討論？`,
+                    `總結對話討論的重點`,
                   ].map((message, index) => (
                     <button
                       onClick={() => sendDefaultMessage(message)}

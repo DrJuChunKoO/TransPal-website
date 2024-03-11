@@ -30,7 +30,7 @@ export async function POST(req: Request) {
         text,
       })
     );
-    const systemPrompt = `你是會議逐字稿的 AI 助手，下列是會議逐字稿的一部分。
+    const systemPrompt = `你是會議逐字稿的 AI 助手，下列是對話的一部分。
 ---------------------
 ${speechMessages
   .map((x: { speaker: string; text: string }, i: number) => {
