@@ -12,6 +12,7 @@ import {
 import { twMerge } from "tailwind-merge";
 import { useCompletion } from "ai/react";
 import { useLocalStorage } from "usehooks-ts";
+import Markdown from "react-markdown";
 function Message({ from, content }: { from: "me" | "ai"; content: string }) {
   return (
     <div className="flex w-full gap-2 items-start mb-2">
@@ -33,7 +34,7 @@ function Message({ from, content }: { from: "me" | "ai"; content: string }) {
             : "bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-200"
         )}
       >
-        {content}
+        <Markdown className="prose prose-sm">{content}</Markdown>
       </div>
     </div>
   );
@@ -147,9 +148,9 @@ export default function SpeechAI({ filename }: { filename: string }) {
               {!messages.length && (
                 <motion.div
                   className="flex gap-2 flex-col pl-12 text-pink-800 dark:text-pink-100"
-                  initial={{ opacity: 0, y: 100 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 100 }}
+                  exit={{ opacity: 0, y: 20 }}
                 >
                   {[
                     `對話主題是什麼？`,
@@ -159,7 +160,7 @@ export default function SpeechAI({ filename }: { filename: string }) {
                   ].map((message, index) => (
                     <button
                       onClick={() => sendDefaultMessage(message)}
-                      className="flex gap-2 hover:opacity-75 active:opacity-50"
+                      className="flex gap-2 hover:opacity-75 active:opacity-50 text-left text-sm items-center"
                       key={index}
                     >
                       <MessageCircleQuestion />
