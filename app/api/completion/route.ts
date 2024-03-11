@@ -27,7 +27,6 @@ export async function POST(req: Request) {
         text,
       })
     );
-    console.log(JSON.stringify(speechMessages));
     const systemPrompt = `你是會議逐字稿的 AI 助手，下列是會議逐字稿的一部分。
 ---------------------
 ${speechMessages
@@ -42,7 +41,6 @@ ${speechMessages
 請根據上述內容回答使用者的問題，若無法回答請告知使用者「無法回答」。
 請不要回答與上述內容無關的問題。`;
 
-    console.log(systemPrompt);
     // Ask OpenAI for a streaming completion given the prompt
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo-16k",
