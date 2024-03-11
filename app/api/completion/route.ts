@@ -30,19 +30,11 @@ export async function POST(req: Request) {
         text,
       })
     );
-    const systemPrompt = `你是會議逐字稿的 AI 助手，下列是對話的一部分。
----------------------
-${speechMessages
-  .map((x: { speaker: string; text: string }, i: number) => {
-    if (speechMessages[i - 1]?.speaker === x.speaker) {
-      return x.text;
-    }
-    return `\n${x.speaker}：${x.text}`;
-  })
-  .join("")}
----------------------
-請根據上述內容回答使用者的問題，若無法回答請告知使用者「無法回答」。
-請不要回答與上述內容無關的問題。`;
+    const systemPrompt = `你是會議逐字稿的 AI 助手
+1. 請根據對話內容回答使用者的問題，若無法回答請告知使用者「無法回答」。
+2. 請不要回答與對話內容無關的問題
+3. 請不要根據對話中沒有的資訊回答問題
+4. 簡短回答`;
 
     // Ask OpenAI for a streaming completion given the prompt
     const response = await openai.chat.completions.create({
@@ -52,6 +44,17 @@ ${speechMessages
       max_tokens: 1024,
       messages: [
         { role: "system", content: systemPrompt },
+        {
+          role: "user",
+          content: speechMessages
+            .map((x: { speaker: string; text: string }, i: number) => {
+              if (speechMessages[i - 1]?.speaker === x.speaker) {
+                return x.text;
+              }
+              return `\n${x.speaker}：${x.text}`;
+            })
+            .join(""),
+        },
         ...messages,
         {
           role: "user",
