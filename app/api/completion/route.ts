@@ -1,6 +1,8 @@
 import OpenAI from "openai";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { promises as fs } from "fs";
+import path from "path";
+
 // Create an OpenAI API client
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -10,19 +12,18 @@ const openai = new OpenAI({
 
 export async function POST(req: Request) {
   const { messages, filename, prompt } = await req.json();
+  const filePath = path.join(
+    process.cwd(),
+    `./public/speeches/${decodeURIComponent(filename)}.json`
+  );
   try {
-    await fs.access(`./public/speeches/${decodeURIComponent(filename)}.json`);
+    await fs.access(filePath);
   } catch (e) {
     console.error(e);
     return new Response("File not found", { status: 404 });
   }
   try {
-    let speechData = JSON.parse(
-      await fs.readFile(
-        `./public/speeches/${decodeURIComponent(filename)}.json`,
-        "utf-8"
-      )
-    );
+    let speechData = JSON.parse(await fs.readFile(filePath, "utf-8"));
     let speechMessages = speechData.content.map(
       ({ speaker, text }: { speaker: string; text: string }) => ({
         speaker,
