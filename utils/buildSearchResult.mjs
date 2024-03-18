@@ -13,7 +13,7 @@ async function buildSearchResult() {
     result.push({
       name: info.name,
       date: info.date,
-      url: `/speeches/${info.date}%20${info.slug}`,
+      url: `/speeches/${info.date}-${info.slug}`,
       content: content.map(({ id, text, speaker }) => ({
         id,
         text,
