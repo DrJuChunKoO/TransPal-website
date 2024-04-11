@@ -38,7 +38,7 @@ export async function POST(req: Request) {
 
     // Ask OpenAI for a streaming completion given the prompt
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo-16k",
+      model: "gpt-4-turbo",
       stream: true,
       temperature: 0.6,
       max_tokens: 1024,
