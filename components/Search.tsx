@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import searchResult from "../public/searchResult.json";
 
@@ -33,6 +33,23 @@ function HighlightText({
 
 export default function Search() {
   const [search, setSearch] = useState("");
+  const [searchLength, setSearchLength] = useState(50);
+  useEffect(() => {
+    setSearchLength(50);
+  }, [search]);
+  useEffect(() => {
+    // if user scroll to bottom, load more
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop !==
+        document.documentElement.offsetHeight
+      )
+        return;
+      setSearchLength((searchLength) => searchLength + 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const splitedSearch = search
     .trim()
     .split(" ")
@@ -58,7 +75,7 @@ export default function Search() {
     })
     .filter((item) => item.score > 0)
     .sort((a, b) => b?.score - a?.score)
-    .slice(0, 10);
+    .slice(0, searchLength);
   return (
     <div>
       <input
@@ -77,7 +94,7 @@ export default function Search() {
               className="py-2 px-4 rounded hover:bg-slate-50 dark:hover:bg-white/5 block"
             >
               <div className="font-bold">
-                {item.name}{" "}
+                <HighlightText text={item.name} keywords={splitedSearch} />{" "}
                 <span className="text-gray-500 dark:text-white/50 font-normal">
                   {item.date}
                 </span>
@@ -85,7 +102,7 @@ export default function Search() {
 
               <div>
                 <span className="text-gray-500 dark:text-white/50 font-normal bg-slate-50 dark:bg-white/5 text-sm border border-gray-200 dark:border-white/5 rounded px-1 py-0.5 mr-1 tracking-wide">
-                  {item.speaker}
+                  <HighlightText text={item.speaker} keywords={splitedSearch} />
                 </span>
                 <HighlightText text={item.text} keywords={splitedSearch} />
               </div>
@@ -94,6 +111,12 @@ export default function Search() {
         {search.length > 1 && filteredSearch.length === 0 && (
           <div className="text-gray-500 dark:text-white/50 text-center my-12">
             無法找到符合的結果，請嘗試其他關鍵字
+          </div>
+        )}
+
+        {search.length >= 1 && filteredSearch.length !== 0 && (
+          <div className="text-gray-500 dark:text-white/50 text-center my-12">
+            - 以上是所有結果 -
           </div>
         )}
       </div>
