@@ -4,7 +4,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import { twMerge } from "tailwind-merge";
 const inter = Inter({ subsets: ["latin"] });
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "TransPal",
@@ -33,7 +33,7 @@ export default function RootLayout({
           {children}
         </div>
       </body>
-      <GoogleAnalytics gaId="G-N8CTYQPL0W" />
+      <GoogleTagManager gtmId="GTM-MN9HZ6G2" />
     </html>
   );
 }
