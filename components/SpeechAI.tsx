@@ -205,6 +205,7 @@ export default function SpeechAI({ filename }: { filename: string }) {
                 placeholder="在此輸入文字⋯⋯"
                 value={input}
                 onChange={handleInputChange}
+                required
               />
               <button
                 type="submit"
