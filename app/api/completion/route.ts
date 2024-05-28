@@ -64,8 +64,25 @@ export async function POST(req: Request) {
     });
     // Convert the response into a friendly text-stream
     const stream = OpenAIStream(response);
+    const reStream = new ReadableStream({
+      async start(controller) {
+        for await (const chunk of stream as any) {
+          controller.enqueue(chunk);
+          // on end
+          await new Promise((r) =>
+            setTimeout(
+              r,
+              // get a random number between 5ms and 25ms to simulate a random delay
+              Math.floor(Math.random() * 20) + 5
+            )
+          );
+        }
+        controller.close();
+      },
+    });
+
     // Respond with the stream
-    return new StreamingTextResponse(stream);
+    return new StreamingTextResponse(reStream);
   } catch (e) {
     console.error(e);
     return new Response("Unexpected error", { status: 500 });
