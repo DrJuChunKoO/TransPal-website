@@ -64,9 +64,7 @@ export default async function Page({ params }: Props) {
       {description && (
         <div className="prose prose-sm w-full dark:prose-invert my-6">
           <div className="h-[2px] bg-current rounded-full w-full opacity-10" />
-          <Markdown
-            className={"prose prose-sm w-full dark:prose-invert my-6 break-all"}
-          >
+          <Markdown className="prose prose-sm w-full dark:prose-invert my-6 break-all">
             {description || ""}
           </Markdown>
           <div className="h-[2px] bg-current rounded-full w-full opacity-10" />
