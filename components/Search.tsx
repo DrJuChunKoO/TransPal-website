@@ -10,6 +10,7 @@ function HighlightText({
   text: string;
   keywords: string[];
 }) {
+  if (!text) return null;
   const regex = new RegExp(`(${keywords.join("|")})`, "gi");
   const parts = text.split(regex);
   return (
@@ -67,9 +68,9 @@ export default function Search() {
     .map((item) => {
       let score = 0;
       for (let keyword of splitedSearch) {
-        if (item.name.toLowerCase().includes(keyword)) score += 1;
-        if (item.speaker.toLowerCase().includes(keyword)) score += 3;
-        if (item.text.toLowerCase().includes(keyword)) score += 10;
+        if (item.name?.toLowerCase().includes(keyword)) score += 1;
+        if (item.speaker?.toLowerCase().includes(keyword)) score += 3;
+        if (item.text?.toLowerCase().includes(keyword)) score += 10;
       }
       return { ...item, score };
     })
@@ -101,9 +102,14 @@ export default function Search() {
               </div>
 
               <div>
-                <span className="text-gray-500 dark:text-white/50 font-normal bg-slate-50 dark:bg-white/5 text-sm border border-gray-200 dark:border-white/5 rounded px-1 py-0.5 mr-1 tracking-wide">
-                  <HighlightText text={item.speaker} keywords={splitedSearch} />
-                </span>
+                {item.speaker && (
+                  <span className="text-gray-500 dark:text-white/50 font-normal bg-slate-50 dark:bg-white/5 text-sm border border-gray-200 dark:border-white/5 rounded px-1 py-0.5 mr-1 tracking-wide">
+                    <HighlightText
+                      text={item.speaker}
+                      keywords={splitedSearch}
+                    />
+                  </span>
+                )}
                 <HighlightText text={item.text} keywords={splitedSearch} />
               </div>
             </Link>
