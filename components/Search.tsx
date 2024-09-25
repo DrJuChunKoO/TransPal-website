@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import searchResult from "../public/searchResult.json";
+import { parseAsString, useQueryState } from "nuqs";
 
 function HighlightText({
   text,
@@ -33,7 +34,10 @@ function HighlightText({
 }
 
 export default function Search() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useQueryState(
+    "search",
+    parseAsString.withDefault(""),
+  );
   const [searchLength, setSearchLength] = useState(50);
   useEffect(() => {
     setSearchLength(50);
@@ -84,11 +88,11 @@ export default function Search() {
         value={search}
         className="w-full p-2 border border-gray-300 rounded-md my-4 bg-transparent outline-none focus:border-gray-500 dark:border-white/5 dark:bg-white/5 dark:focus:border-white/10"
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="在這裡輸入關鍵字來搜尋，像是「community」、「電子簽章」等等"
+        placeholder="在這裡輸入人名或對話內容來搜尋，像是「葛如鈞」、「電子簽章」等等"
       />
       <div className="-mx-4">
         {search.length >= 1 &&
-          filteredSearch.map((item) => (
+          filteredSearch.map((item: any) => (
             <Link
               key={item.id}
               href={`${item.url}#${item.id}`}
@@ -122,7 +126,8 @@ export default function Search() {
 
         {search.length >= 1 && filteredSearch.length !== 0 && (
           <div className="text-gray-500 dark:text-white/50 text-center my-12">
-            - 以上是所有結果 -
+            <span className="opacity-50">-</span> 以上是所有結果{" "}
+            <span className="opacity-50">-</span>
           </div>
         )}
       </div>
