@@ -1,5 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { getSpeech, getSpeeches } from "@/utils/speeches";
+import { Pen, Clock } from "lucide-react";
+import ShareButton from "./share";
 import Markdown from "react-markdown";
 import SpeechContent from "@/components/SpeechContent";
 import SpeechAI from "@/components/SpeechAI";
@@ -63,8 +65,22 @@ export default async function Page({ params }: Props) {
       <div className="text-2xl md:text-4xl font-bold text-gray-800 dark:text-white">
         {name}
       </div>
-      <div className="text-gray-500 dark:text-gray-200 mb-6 md:text-xl md:mt-1">
-        {date}
+      <div className="flex justify-between gap-2 flex-wrap items-center mt-1">
+        <div className="text-gray-500 dark:text-gray-200 flex gap-2 items-center">
+          <Clock size={16} />
+          {date}
+        </div>
+        <div className="flex gap-2 self-end">
+          <ShareButton />
+          <a
+            href={`https://transpal-editor.juchunko.com/?file=${params.filename}`}
+            target="_blank"
+            className="inline-flex items-center gap-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-200 text-sm p-2 sm:px-3"
+          >
+            <Pen size={16} />
+            <span className="hidden sm:inline">編輯</span>
+          </a>
+        </div>
       </div>
       {description && (
         <div className="prose prose-sm w-full dark:prose-invert my-6">
