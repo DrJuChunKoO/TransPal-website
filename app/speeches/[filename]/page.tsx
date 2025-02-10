@@ -30,7 +30,9 @@ export async function generateMetadata(
       : speakers;
   return {
     title: speech.info.name,
-    description: `日期：${speech.info.date}\n與會人士：${speakers}`,
+    description: `時間：${speech.info.date}${
+      speech.info.time ? " " + speech.info.time : ""
+    }\n與會人士：${speakers}`,
     openGraph: {
       images: [
         {
@@ -38,7 +40,9 @@ export async function generateMetadata(
             JSON.stringify({
               title: speech.info.name,
               speakers: ogSpeakers,
-              date: speech.info.date,
+              date:
+                speech.info.date +
+                (speech.info.time ? " " + speech.info.time : ""),
             })
           )}`,
         },
@@ -58,7 +62,8 @@ export default async function Page({ params }: Props) {
   const name =
     speech.info.name ||
     decodeURIComponent(params.filename).split(".").slice(0, -1).join(".");
-  const date = speech.info.date;
+  const date =
+    speech.info.date + (speech.info.time ? " " + speech.info.time : "");
   const description = speech.info?.description;
   return (
     <div className="container my-10">
