@@ -30,7 +30,8 @@ export async function generateMetadata(
           url: `/api/og/speech?data=${encodeURIComponent(
             JSON.stringify({
               title: speech.info.name,
-              speakers,
+              speakers:
+                speakers.length > 72 ? speakers.slice(0, 72) + "⋯" : speakers,
               date: speech.info.date,
             })
           )}`,
