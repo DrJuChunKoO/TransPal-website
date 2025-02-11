@@ -24,8 +24,8 @@ export async function generateMetadata(
     ...new Set(speech.content.map((item: any) => item.speaker)),
   ].join("、");
   const ogSpeakers =
-    speakers.length > 72
-      ? speakers.match(/.{1}/gu)?.slice(0, 72).join("") +
+    speakers.length > 65
+      ? speakers.match(/.{1}/gu)?.slice(0, 65).join("") +
         `等 ${speakers.split("、").length} 人`
       : speakers;
   return {
