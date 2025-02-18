@@ -18,6 +18,7 @@ export async function GET(request: Request) {
             justifyContent: "center",
             backgroundColor: "white",
           }}
+          lang="zh-TW"
         >
           <div
             style={{
