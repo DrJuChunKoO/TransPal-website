@@ -1,14 +1,15 @@
+import path from "path";
 import { promises as fs } from "fs";
 import { cache } from "react";
 export const getSpeeches = cache(async () => {
   const speeches = await Promise.all(
     (
-      await fs.readdir(process.cwd() + "/public/speeches")
+      await fs.readdir(path.join(process.cwd(), "/public/speeches"))
     )
       .filter((file) => file.endsWith(".json"))
       .map(async (file) => {
         const fileData = await fs.readFile(
-          process.cwd() + "/public/speeches/" + file,
+          path.join(process.cwd(), "/public/speeches/", file),
           "utf-8"
         );
         const fileParsed = JSON.parse(fileData);
@@ -27,10 +28,11 @@ export const getSpeeches = cache(async () => {
 });
 export const getSpeech = cache(async (filename: string) => {
   const file = await fs.readFile(
-    process.cwd() +
-      "/public/speeches/" +
-      decodeURIComponent(filename) +
-      ".json",
+    path.join(
+      process.cwd(),
+      "/public/speeches/",
+      decodeURIComponent(filename) + ".json"
+    ),
     "utf-8"
   );
   const fileParsed: {

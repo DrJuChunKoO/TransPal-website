@@ -43,24 +43,6 @@ export async function generateMetadata(
     },
   } as Metadata;
 }
-export async function generateStaticParams() {
-  const speeches = await getSpeeches();
-  const speechDatas = await Promise.all(
-    speeches.map(async (speech) => ({
-      filename: speech.filename,
-      ...(await getSpeech(speech.filename)),
-    }))
-  );
-
-  return speechDatas
-    .map((x) =>
-      x.content.map((item: any) => ({
-        filename: x.filename,
-        messageId: item.id,
-      }))
-    )
-    .flat();
-}
 
 export default async function Page({ params }: Props) {
   const speech = await getSpeech(params.filename);
