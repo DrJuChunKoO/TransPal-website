@@ -23,11 +23,6 @@ export async function generateMetadata(
     // @ts-ignore
     ...new Set(speech.content.map((item: any) => item.speaker)),
   ].join("、");
-  const ogSpeakers =
-    speakers.length > 65
-      ? speakers.match(/.{1}/gu)?.slice(0, 65).join("") +
-        `等 ${speakers.split("、").length} 人`
-      : speakers;
   return {
     title: speech.info.name,
     description: `時間：${speech.info.date}${
@@ -39,7 +34,7 @@ export async function generateMetadata(
           url: `/api/og/speech?data=${encodeURIComponent(
             JSON.stringify({
               title: speech.info.name,
-              speakers: ogSpeakers,
+              speakers,
               date:
                 speech.info.date +
                 (speech.info.time ? " " + speech.info.time : ""),

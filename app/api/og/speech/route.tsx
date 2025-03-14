@@ -36,6 +36,8 @@ export async function GET(request: Request) {
               style={{
                 fontSize: 64,
                 color: `rgb(31, 41, 55)`,
+                display: "block",
+                lineClamp: 3,
               }}
             >
               {title}
@@ -45,6 +47,8 @@ export async function GET(request: Request) {
                 fontSize: 48,
                 color: `rgb(55, 65, 81)`,
                 opacity: 0.75,
+                display: "block",
+                lineClamp: 2,
               }}
             >
               {speakers}

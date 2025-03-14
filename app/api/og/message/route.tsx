@@ -36,11 +36,12 @@ export async function GET(request: Request) {
               width: "1000px",
             }}
           >
-            {" "}
             <div
               style={{
                 fontSize: 64,
                 color: `rgb(31, 41, 55)`,
+                display: "block",
+                lineClamp: 1,
               }}
             >
               {speaker}
@@ -50,9 +51,11 @@ export async function GET(request: Request) {
                 fontSize: 48,
                 color: `rgb(55, 65, 81)`,
                 opacity: 0.75,
+                display: "block",
+                lineClamp: 5,
               }}
             >
-              {message.slice(0, 70) + (message.length > 78 ? "..." : "")}
+              {message}
             </div>
             <div style={{ flex: 1 }}></div>
             <div
