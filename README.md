@@ -20,8 +20,8 @@ TransPal consists of three parts
 - use Node.js v20
 
 ```
-npm i
-npm run dev
+pnpm i
+pnpm run dev
 ```
 
 ## Adding Meeting Records
