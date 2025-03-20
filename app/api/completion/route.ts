@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   const { messages, filename, prompt } = await req.json();
   const filePath = path.join(
     process.cwd(),
-    `./public/speeches/${decodeURIComponent(filename)}.json`,
+    `./public/speeches/${decodeURIComponent(filename)}.json`
   );
   try {
     await fs.access(filePath);
@@ -28,13 +28,13 @@ export async function POST(req: Request) {
       ({ speaker, text }: { speaker: string; text: string }) => ({
         speaker,
         text,
-      }),
+      })
     );
     const systemPrompt = `你是會議逐字稿的 AI 助手
 1. 請根據對話內容回答使用者的問題，若無法回答請告知使用者「無法回答」。
 2. 請不要回答與對話內容無關的問題
 3. 請不要根據對話中沒有的資訊回答問題
-4. 簡短回答`;
+4. 在分析議題時，若有不同觀點，請多方參考並總結`;
 
     // Ask OpenAI for a streaming completion given the prompt
     const response = await openai.chat.completions.create({
@@ -73,8 +73,8 @@ export async function POST(req: Request) {
             setTimeout(
               r,
               // get a random number between 5ms and 25ms to simulate a random delay
-              Math.floor(Math.random() * 20) + 5,
-            ),
+              Math.floor(Math.random() * 20) + 5
+            )
           );
         }
         controller.close();
