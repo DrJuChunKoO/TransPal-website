@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "node utils/buildSearchResult.mjs && next build",
+    "dev": "node scripts/generate-avatars.js && node utils/buildSearchResult.mjs && next dev",
+    "build": "node scripts/generate-avatars.js && node utils/buildSearchResult.mjs && next build",
     "start": "next start",
     "lint": "next lint"
   },

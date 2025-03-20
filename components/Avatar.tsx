@@ -1,7 +1,8 @@
-import { promises as fs } from "fs";
-import Image from "next/image";
+"use client";
 import { twMerge } from "tailwind-merge";
 import { UserIcon } from "@heroicons/react/24/solid";
+import avatars from "@/public/avatars.json";
+
 function genColor(name: string) {
   let randomSeed = name
     .split("")
@@ -14,16 +15,17 @@ function genColor(name: string) {
   return "#" + resultColor;
 }
 
-export default async function Avatar({
+export default function Avatar({
   name,
   className,
 }: {
   name: string;
   className?: string;
 }) {
-  try {
-    await fs.access(process.cwd() + "/public/avatars/" + name + ".jpg");
+  // 檢查是否有有效的頭貼
+  const hasAvatar = name in avatars;
 
+  if (hasAvatar) {
     return (
       <div
         className={twMerge(
@@ -31,29 +33,30 @@ export default async function Avatar({
           className
         )}
       >
-        <Image
-          src={"/avatars/" + name + ".jpg"}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={`/avatars/${name}.jpg`}
           width={48}
           height={48}
           className="size-12 object-cover object-center"
-          alt="Picture of the author"
+          alt={`Picture of ${name}`}
         />
       </div>
     );
-  } catch (e) {
-    const bgColor = genColor(name);
-    return (
-      <div
-        className={twMerge(
-          "size-12 rounded-full overflow-hidden flex items-center justify-center text-white",
-          className
-        )}
-        style={{
-          backgroundColor: bgColor,
-        }}
-      >
-        <UserIcon className="size-8" />
-      </div>
-    );
   }
+
+  const bgColor = genColor(name);
+  return (
+    <div
+      className={twMerge(
+        "size-12 rounded-full overflow-hidden flex items-center justify-center text-white",
+        className
+      )}
+      style={{
+        backgroundColor: bgColor,
+      }}
+    >
+      <UserIcon className="size-8" />
+    </div>
+  );
 }
